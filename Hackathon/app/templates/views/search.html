@@ -1,0 +1,53 @@
+{% extends 'layouts/base.html' %} {% block css %}
+<style>
+    .table-image td,
+    .table-image th {
+        vertical-align: middle;
+    }
+    
+    .img-middle {
+        width: 90px;
+        height: 90px;
+    }
+</style>
+{% endblock %} {% block content %}
+<div class="row">
+    <div class="col-12">
+        <h3>Resultados del artista : {{ artist_name }}</h3>
+        <span>Api URL : {{ api_url }}</span>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-image">
+                <thead>
+                    <tr>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Generos</th>
+                        <th scope="col">Seguidores</th>
+                        <th scope="col">Popularidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for artist in results %}
+                    <tr>
+                        <td>
+                            {% if artist.images %}
+                            <img src={{ artist.images[-1].url }} class="img-thumbnail img-middle" alt="{{ artist.name }}"> {% else %}
+                            <img src="http://via.placeholder.com/90" class="img-thumbnail img-middle" alt="{{ artist.name }}"> {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('artist', id=artist.id) }}">
+                                    {{ artist.name }}
+                                </a>
+                        </td>
+                        <td>{{ artist.genres | join(', ') }}</td>
+                        <td>{{ artist.followers.total }}</td>
+                        <td>{{ artist.popularity }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br><br><br><br> {% endblock %}

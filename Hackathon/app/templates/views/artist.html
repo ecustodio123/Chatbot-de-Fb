@@ -1,0 +1,68 @@
+{% extends 'layouts/base.html' %} {% block content %} {% block css %}
+<style>
+    .img-middle {
+        width: 90px;
+        height: 90px;
+    }
+</style>
+{% endblock %}
+
+<h1>{{ artist.name }}</h1>
+<a href="artist.external_urls.spotify">{{ artist.name  }} en Spotify</a>
+<br><br>
+<div class="row">
+    <div class="col-5">
+        <img src="{{ image_url }}" alt="{{ artist.name }}" class="img-thumbnail img-fluid">
+        <br><br>
+        <h4>Artistas relacionados</h4>
+        <div class="row">
+            {% for related in related_artists %}
+            <div class="col-xs-4">
+                <a href="{{ url_for('artist', id=related.id) }}">
+                        {% if related.images %}
+                            <img src={{ related.images[-1].url }} class="img-thumbnail rounded-circle img-middle">
+                        {% else %}
+                            <img src="http://via.placeholder.com/160" class="img-thumbnail rounded-circle img-middle">
+                        {% endif %}
+                    </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-7">
+        <div class="table-respondive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Musica</th>
+                        <th>Popularidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for track in tracks %}
+                    <tr>
+                        <td>
+                            <span>{{  track.name  }}</span>
+                            <small>
+                                <a href="{{ track.album.external_urls.spotify}}">
+                                    {{ track.album.name }}
+                                </a>
+                            </small>
+                            <br>
+                            <audio controls>
+                                <source src="{{ track.preview_url }}">
+                              Your browser does not support the audio element.
+                            </audio>
+                        </td>
+                        <td>
+                            {{ track.popularity }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br><br>
+<br><br> {% endblock %}

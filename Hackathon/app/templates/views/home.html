@@ -1,0 +1,15 @@
+{% extends 'layouts/base.html' %} {% block content %}
+<div class="jumbotron mt-3">
+    <h1>Busca tu artista favorito</h1>
+    <p class="lead">(Ejm: Rata blanca)</p>
+    <form class="form-inline" action="{{ url_for('search_post') }}" method="POST">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="inputArtista" class="sr-only">Artista</label>
+            <input type="text" name="artista" class="form-control" id="inputArtista" placeholder="Artista">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+    </form>
+</div>
+
+
+{% endblock %}
